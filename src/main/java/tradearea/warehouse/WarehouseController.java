@@ -1,5 +1,6 @@
 package tradearea.warehouse;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,16 +26,19 @@ public class WarehouseController {
         return mainPage;
     }
 
+    @CrossOrigin
     @RequestMapping(value="/warehouse/{inID}/data", produces = MediaType.APPLICATION_JSON_VALUE)
     public WarehouseData warehouseData( @PathVariable UUID inID ) {
         return service.getWarehouseData(inID);
     }
 
+    @CrossOrigin
     @RequestMapping(value="/warehouse/{inID}/xml", produces = MediaType.APPLICATION_XML_VALUE)
     public WarehouseData warehouseDataXML( @PathVariable UUID inID ) {
         return service.getWarehouseData(inID);
     }
 
+    @CrossOrigin
     @RequestMapping("/warehouse/{inID}/transfer")
     public String warehouseTransfer( @PathVariable UUID inID ) {
         return service.getGreetings("Warehouse.Transfer!");

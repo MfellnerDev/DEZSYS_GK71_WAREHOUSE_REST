@@ -278,3 +278,108 @@ Navigieren wir zu `http://localhost:8080/warehouse/469d7240-b974-441d-9562-2c56a
 ```
 
 
+
+## 3. Frontend hinzufügen
+
+Für ein GK-Vollständig ist auch noch vorgesehen, diese erweiterte API-Schnittstelle zu konsumieren.
+
+Heißt, dass wir hier noch einen Client benötigen, der eine GET Request an die API schickt (JSON-Format!).
+
+Dann können wir diese JSON-Daten in einen HTML-Table rendern.
+
+Ich werde hier mit VueJS + axios + HTML arbeiten.
+
+
+
+### 3.1 HTML Code
+
+Als erstes erschaffen wir ein sehr einfaches HTML-Konstrukt und befüllen es mit "Platzhaltern" sowie den benötigten For-Schleifen:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Warehouse consumer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div id="app" class="container mt-5">
+    <h1>Warehouse Data</h1>
+    <table class="table table-bordered">
+        <tbody>
+        <tr v-for="(item, key) in warehouseData" :key="key">
+            <td>{{ key }}</td>
+            <td>{{ item }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <h1>Products stored in the warehouse</h1>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Kategory</th>
+            <th>Anzahl</th>
+            <th>Einheit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in productData" :key="key">
+            <td>{{ item.productID }}</td>
+            <td>{{ item.productName }}</td>
+            <td>{{ item.productCategory }}</td>
+            <td>{{ item.productQuantity }}</td>
+            <td>{{ item.productUnit }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+```
+
+- Hier haben wir zwei Sektionen:
+  
+  - Die erste beinhaltet die allgemeinen Daten über das ausgewählte Warenhaus wie z.B. ID, Name, Standort, etc.
+  
+  - Die zweite Sektion rendert dann die wirklichen Produkte, die in diesem Warenhaus gespeichert sind
+
+
+
+### 3.2 VueJS Code
+
+Jetzt müssen wir nur noch eine einfacher GET-Request an die API-URL senden, die Daten empfangen und speichern:
+
+```javascript
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            warehouseData: {},
+            productData: {}
+        },
+        mounted() {
+            // Make a GET request using Axios to fetch JSON data
+            axios.get("http://localhost:8080/warehouse/469d7240-b974-441d-9562-2c56a7b28767/data")
+                .then(response => {
+                    this.productData = response.data.productData;
+                    delete response.data.productData;
+                    this.warehouseData = response.data;
+                })
+                .catch(error => {
+                    console.error("Error fetching data: " + error.message);
+                });
+        }
+    });
+</script>
+```
+
+- `data` beinhaltet die Daten unserer zwei Sektionen: eine Sektion für die allgemeinen Daten über das Warenhaus und die andere für die Produkte
+
+- `mounted` wird dann ausgeführt, wenn die Website refreshed wird.
+
+- Wir speichern als erstes alle Produktdaten und löschen diese dann aus der Response
+
+- Danach nehmen wir die übrige Response und speichern diese ebenfalls - hier sind jetzt die allgemeinen Daten zum warehouse vorhanden.
