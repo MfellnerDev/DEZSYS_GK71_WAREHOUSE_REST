@@ -1,6 +1,7 @@
 package tradearea.model;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
 
@@ -17,8 +18,9 @@ public class WarehouseData {
 
 	private String warehouseCountry;
 
-
 	private String timestamp;
+
+	private Product[] productData;
 
 	/**
 	 * Constructor
@@ -88,6 +90,14 @@ public class WarehouseData {
 		this.warehouseCountry = warehouseCountry;
 	}
 
+	public Product[] getProductData() {
+		return productData;
+	}
+
+	public void setProductData(Product[] productData) {
+		this.productData = productData;
+	}
+
 	@Override
 	public String toString() {
 		return "WarehouseData{" +
@@ -98,6 +108,7 @@ public class WarehouseData {
 				", warehouseCity='" + warehouseCity + '\'' +
 				", warehouseCountry='" + warehouseCountry + '\'' +
 				", timestamp='" + timestamp + '\'' +
+				", productData=" + Arrays.toString(productData) +
 				'}';
 	}
 }

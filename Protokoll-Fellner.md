@@ -10,7 +10,7 @@ In diesem Protokoll werde ich alle von mir gemachten Schritte für die jeweilige
 
 
 
-# 1. Benötigte Attribute / Model-Klassen hinzufügen
+## 1. Benötigte Attribute / Model-Klassen hinzufügen
 
 
 
@@ -34,14 +34,6 @@ Um der Angabe Gerecht zu werden, benötigen wir noch folgende Komponenten:
     
     - productUnit . String
 
-- `Klasse`: ProductData
-  
-  - Beinhaltet ein Array aus Product-Objekten
-  
-  - `Attribute`:
-    
-    - products : Product[]
-
 - `Attribute` für Klasse `WarehouseData`:
   
   - warehouseAddress : String
@@ -51,6 +43,8 @@ Um der Angabe Gerecht zu werden, benötigen wir noch folgende Komponenten:
   - warehouseCity : String
   
   - warehouseCountry : String
+  
+  - products : Product[]
 
 
 
@@ -134,7 +128,7 @@ Wir können natürlich auch zu `http://localhost:8080/warehouse/001/data` navigi
 
 ### 1.3 Hinzufügen von benötigten Klassen
 
-Jetzt fügen wir die benötigten Klassen hinzu.
+Jetzt fügen wir die benötigte Klasse hinzu.
 
 
 
@@ -153,3 +147,9 @@ wir haben jetzt eine Klasse namens `Product` mit den folgenden Attributen:
 ```
 
 
+
+## 2. Produkt-Objekte generieren
+
+Jetzt haben wir die Grundstruktur - also die Klassen.
+
+Im nächsten Schritt müssen wir noch vier Realitätsnahe Fake-Produkte für unser 

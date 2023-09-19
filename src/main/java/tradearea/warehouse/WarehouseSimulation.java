@@ -1,5 +1,6 @@
 package tradearea.warehouse;
 
+import tradearea.model.Product;
 import tradearea.model.WarehouseData;
 
 import java.util.UUID;
@@ -21,6 +22,15 @@ public class WarehouseSimulation {
 		return rounded.intValue();
 
 	}
+
+	public Product[] getFourProductData()	{
+		Product[] products = new Product[4];
+		products[0] = new Product(UUID.randomUUID(), "Frische Orangen", "FRUECHTE", 200, "1KG/Packung");
+		products[1] = new Product(UUID.randomUUID(), "Vitaminsaft", "GETRAENKE", 2500, "1L/Packung");
+		products[2] = new Product(UUID.randomUUID(), "Kartoffeln", "GEMUESE", 7300, "3KG/Packung");
+		products[3] = new Product(UUID.randomUUID(), "Dosenbier", "ALKHOLISCHE GETRAENKE", 1000, "500ML/Packung");
+		return products;
+	}
 	
 	public WarehouseData getData( String inID ) {
 		
@@ -32,6 +42,8 @@ public class WarehouseSimulation {
 		data.setWarehouseAddress("WhoKnows Straße 12");
 		data.setWarehouseCountry("Autria");
 		data.setWarehousePostalCode(4000);
+		data.setProductData(getFourProductData());
+
 
 		return data;
 		
