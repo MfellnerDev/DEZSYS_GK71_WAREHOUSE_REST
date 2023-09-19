@@ -137,3 +137,19 @@ Wir können natürlich auch zu `http://localhost:8080/warehouse/001/data` navigi
 Jetzt fügen wir die benötigten Klassen hinzu.
 
 
+
+wir haben jetzt eine Klasse namens `Product` mit den folgenden Attributen:
+
+```java
+    private UUID productID;
+
+    private String productName;
+
+    private String productCategory;
+
+    private int productQuantity;
+
+    private String productUnit;
+```
+
+
