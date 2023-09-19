@@ -154,21 +154,47 @@ Jetzt haben wir die Grundstruktur - also die Klassen.
 Im nächsten Schritt müssen wir noch vier Realitätsnahe Fake-Produkte für unser Warenhaus generieren, dies machen wir folgendermaßen:
 
 ```java
-	public Product[] getFourProductData()	{
+	private static final String[] productNames = {
+			"Milch", "Eier", "Brot", "Reis", "Nudeln", "Kartoffeln", "Tomaten",
+			"Bananen", "Äpfel", "Hühnchen", "Rindfleisch", "Lachs", "Butter",
+			"Käse", "Joghurt"
+	};
+
+	private static final String[] productCategories = {
+			"Milchprodukte", "Eier", "Brot und Backwaren", "Getreide und Reis",
+			"Nudeln", "Gemüse", "Obst", "Obst", "Obst", "Fleisch", "Fleisch",
+			"Fisch", "Milchprodukte", "Milchprodukte", "Milchprodukte"
+	};
+	
+		private static int[] getFourRandomNumbers() {
+		int firstRandomNumber = getRandomInt(0, productNames.length - 1);
+		int secondRandomNumber = getRandomInt(0, productNames.length - 1);
+		int thirdRandomNumber = getRandomInt(0, productNames.length - 1);
+		int fourthRandomNumber = getRandomInt(0, productNames.length - 1);
+		return new int[]{firstRandomNumber, secondRandomNumber, thirdRandomNumber, fourthRandomNumber};
+	}
+
+	private static Product[] getFourProductData() {
+		int[] randomNumbers = getFourRandomNumbers();
 		Product[] products = new Product[4];
-		products[0] = new Product(UUID.randomUUID(), "Frische Orangen", "FRUECHTE", 200, "1KG/Packung");
-		products[1] = new Product(UUID.randomUUID(), "Vitaminsaft", "GETRAENKE", 2500, "1L/Packung");
-		products[2] = new Product(UUID.randomUUID(), "Kartoffeln", "GEMUESE", 7300, "3KG/Packung");
-		products[3] = new Product(UUID.randomUUID(), "Dosenbier", "ALKHOLISCHE GETRAENKE", 1000, "500ML/Packung");
+		for (int i = 0; i < 4; i++) {
+			products[i] = new Product(UUID.randomUUID(), productNames[randomNumbers[i]],
+					productCategories[randomNumbers[i]], getRandomInt(75, 200),
+					i == 1 ? "1L/Packung" : (i == 2 ? "3KG/Packung" : "500ML/Packung"));
+		}
 		return products;
 	}
 ```
 
-- Diese Methode ist für den Anfang nichts anderes als eine Methode mit statischen Werten (ausgenommen der `productID`)
+- Die ersten zwei Arrays sind Produktnamen sowie die dazu passenden Produktkategorien (die Indexe sind hier sehr wichtig!)
 
-- Wie vorgegeben fügt diese Methode genau 4 Objekte in ein Array und gibt dieses zurück.
+- Als erstes holen wir uns 4 Zufallszahlen, welche auf die Länge des Produktnamen-Arrays angepasst sind
 
+- Danach nehmen wir diese Zufallszahlen, gehen in einen for-loop und generieren somit Objekte. Diese Objekte werden dem Array hinzugefügt
 
+- Am Ende wird das Array mit den erstellten Produkten zurückgegeben.
+  
+  
 
 Wir müssen jetzt noch die `getData()` Methode für die Simulation folgendermaßen abändern:
 
@@ -202,10 +228,8 @@ Wir müssen jetzt noch die `getData()` Methode für die Simulation folgendermaß
 Navigieren wir zu `http://localhost:8080/warehouse/469d7240-b974-441d-9562-2c56a7b28767/data`, sehen wir die folgende JSON-Ansicht:
 
 ```json
-{"warehouseID":"469d7240-b974-441d-9562-2c56a7b28767","warehouseName":"Linz Bahnhof","warehouseAddress":"WhoKnows Straße 12","warehousePostalCode":4000,"warehouseCity":"Linz","warehouseCountry":"Autria","timestamp":"2023-09-19 16:09:05.532","productData":[{"productID":"53dbb174-01eb-43df-9092-49a613e49529","productName":"Frische Orangen","productCategory":"FRUECHTE","productQuantity":200,"productUnit":"1KG/Packung"},{"productID":"d8369b85-e681-436d-9451-f41b90174f34","productName":"Vitaminsaft","productCategory":"GETRAENKE","productQuantity":2500,"productUnit":"1L/Packung"},{"productID":"170ef4cd-13d3-41a9-a09e-53015742809d","productName":"Kartoffeln","productCategory":"GEMUESE","productQuantity":7300,"productUnit":"3KG/Packung"},{"productID":"a5e9824f-5a87-4e3f-b72d-500f722b6c2c","productName":"Dosenbier","productCategory":"ALKHOLISCHE GETRAENKE","productQuantity":1000,"productUnit":"500ML/Packung"}]}
+{"warehouseID":"469d7240-b974-441d-9562-2c56a7b28767","warehouseName":"Linz Bahnhof","warehouseAddress":"WhoKnows Straße 12","warehousePostalCode":4000,"warehouseCity":"Linz","warehouseCountry":"Austria","timestamp":"2023-09-19 16:36:56.933","productData":[{"productID":"e940f2af-182d-4b49-940b-723908f53a77","productName":"Brot","productCategory":"Brot und Backwaren","productQuantity":105,"productUnit":"500ML/Packung"},{"productID":"df2a7d5e-97f9-4545-91d5-6229ba0acb05","productName":"Milch","productCategory":"Milchprodukte","productQuantity":167,"productUnit":"1L/Packung"},{"productID":"42c9feae-ee65-4e4b-ac45-c1bc5ac7355b","productName":"Kartoffeln","productCategory":"Gemüse","productQuantity":123,"productUnit":"3KG/Packung"},{"productID":"4c54e706-95bf-4602-b4a1-c152cd73eda4","productName":"Reis","productCategory":"Getreide und Reis","productQuantity":92,"productUnit":"500ML/Packung"}]}
 ```
-
-
 
 #### 3.2 XML-Ansicht
 
@@ -218,37 +242,39 @@ Navigieren wir zu `http://localhost:8080/warehouse/469d7240-b974-441d-9562-2c56a
 <warehouseAddress>WhoKnows Straße 12</warehouseAddress>
 <warehousePostalCode>4000</warehousePostalCode>
 <warehouseCity>Linz</warehouseCity>
-<warehouseCountry>Autria</warehouseCountry>
-<timestamp>2023-09-19 16:09:43.951</timestamp>
+<warehouseCountry>Austria</warehouseCountry>
+<timestamp>2023-09-19 16:32:02.499</timestamp>
 <productData>
 <productData>
-<productID>9cceba01-662c-474c-91f4-7aa41c338cd3</productID>
-<productName>Frische Orangen</productName>
-<productCategory>FRUECHTE</productCategory>
-<productQuantity>200</productQuantity>
-<productUnit>1KG/Packung</productUnit>
+<productID>548aa4bf-7f72-4426-aa00-54d805e9090d</productID>
+<productName>Eier</productName>
+<productCategory>Eier</productCategory>
+<productQuantity>131</productQuantity>
+<productUnit>500ML/Packung</productUnit>
 </productData>
 <productData>
-<productID>d89e80ca-ff44-4f5a-bdfa-183e77209211</productID>
-<productName>Vitaminsaft</productName>
-<productCategory>GETRAENKE</productCategory>
-<productQuantity>2500</productQuantity>
+<productID>ef4d0385-9061-49f3-933a-63fc564cc995</productID>
+<productName>Tomaten</productName>
+<productCategory>Obst</productCategory>
+<productQuantity>183</productQuantity>
 <productUnit>1L/Packung</productUnit>
 </productData>
 <productData>
-<productID>74ee2df1-29c6-43ad-b7c0-7cc155135213</productID>
-<productName>Kartoffeln</productName>
-<productCategory>GEMUESE</productCategory>
-<productQuantity>7300</productQuantity>
+<productID>a0da52cd-c09f-4a89-b333-c08de225fabd</productID>
+<productName>Rindfleisch</productName>
+<productCategory>Fleisch</productCategory>
+<productQuantity>105</productQuantity>
 <productUnit>3KG/Packung</productUnit>
 </productData>
 <productData>
-<productID>b3e72e4e-7b04-4620-98fb-8213d51eab92</productID>
-<productName>Dosenbier</productName>
-<productCategory>ALKHOLISCHE GETRAENKE</productCategory>
-<productQuantity>1000</productQuantity>
+<productID>75f3551a-1275-4802-8024-48bb3a7eb3be</productID>
+<productName>Tomaten</productName>
+<productCategory>Obst</productCategory>
+<productQuantity>140</productQuantity>
 <productUnit>500ML/Packung</productUnit>
 </productData>
 </productData>
 </WarehouseData>
 ```
+
+
