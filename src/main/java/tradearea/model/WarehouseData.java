@@ -2,11 +2,22 @@ package tradearea.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 public class WarehouseData {
 	
-	private String warehouseID;
+	private UUID warehouseID;
 	private String warehouseName;
+
+	private String warehouseAddress;
+
+	private int warehousePostalCode;
+
+	private String warehouseCity;
+
+	private String warehouseCountry;
+
+
 	private String timestamp;
 
 	/**
@@ -21,11 +32,11 @@ public class WarehouseData {
 	/**
 	 * Setter and Getter Methods
 	 */
-	public String getWarehouseID() {
+	public UUID getWarehouseID() {
 		return warehouseID;
 	}
 
-	public void setWarehouseID(String warehouseID) {
+	public void setWarehouseID(UUID warehouseID) {
 		this.warehouseID = warehouseID;
 	}
 
@@ -45,12 +56,48 @@ public class WarehouseData {
 		this.timestamp = timestamp;
 	}
 
-	/**
-	 * Methods
-	 */
+	public String getWarehouseAddress() {
+		return warehouseAddress;
+	}
+
+	public void setWarehouseAddress(String warehouseAddress) {
+		this.warehouseAddress = warehouseAddress;
+	}
+
+	public int getWarehousePostalCode() {
+		return warehousePostalCode;
+	}
+
+	public void setWarehousePostalCode(int warehousePostalCode) {
+		this.warehousePostalCode = warehousePostalCode;
+	}
+
+	public String getWarehouseCity() {
+		return warehouseCity;
+	}
+
+	public void setWarehouseCity(String warehouseCity) {
+		this.warehouseCity = warehouseCity;
+	}
+
+	public String getWarehouseCountry() {
+		return warehouseCountry;
+	}
+
+	public void setWarehouseCountry(String warehouseCountry) {
+		this.warehouseCountry = warehouseCountry;
+	}
+
 	@Override
 	public String toString() {
-		String info = String.format("Warehouse Info: ID = %s, timestamp = %s", warehouseID, timestamp );
-		return info;
+		return "WarehouseData{" +
+				"warehouseID=" + warehouseID +
+				", warehouseName='" + warehouseName + '\'' +
+				", warehouseAddress='" + warehouseAddress + '\'' +
+				", warehousePostalCode=" + warehousePostalCode +
+				", warehouseCity='" + warehouseCity + '\'' +
+				", warehouseCountry='" + warehouseCountry + '\'' +
+				", timestamp='" + timestamp + '\'' +
+				'}';
 	}
 }
