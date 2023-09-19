@@ -32,11 +32,11 @@ public class WarehouseSimulation {
 		return products;
 	}
 	
-	public WarehouseData getData( String inID ) {
+	public WarehouseData getData(UUID inID) {
 		
 		WarehouseData data = new WarehouseData();
 		// parse String into UUID object, we currently want a static id
-		data.setWarehouseID(UUID.fromString("469d7240-b974-441d-9562-2c56a7b28767"));
+		data.setWarehouseID(inID);
 		data.setWarehouseName( "Linz Bahnhof" );
 		data.setWarehouseCity("Linz");
 		data.setWarehouseAddress("WhoKnows Straße 12");
@@ -44,9 +44,7 @@ public class WarehouseSimulation {
 		data.setWarehousePostalCode(4000);
 		data.setProductData(getFourProductData());
 
-
 		return data;
-		
 	}
 
 }
