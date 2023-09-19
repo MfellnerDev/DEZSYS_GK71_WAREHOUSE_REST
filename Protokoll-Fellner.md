@@ -383,3 +383,15 @@ Jetzt müssen wir nur noch eine einfacher GET-Request an die API-URL senden, die
 - Wir speichern als erstes alle Produktdaten und löschen diese dann aus der Response
 
 - Danach nehmen wir die übrige Response und speichern diese ebenfalls - hier sind jetzt die allgemeinen Daten zum warehouse vorhanden.
+
+
+
+### 3.3 Ergebnis
+
+Das fertige Frontend sieht nun folgendermaßen aus:
+
+![](resources/img/warehouse-frontend-example-picture.png)
+
+
+
+
